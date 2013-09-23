@@ -80,8 +80,8 @@ void endRegionGrab()
 
 void saveToClipboard(const std::string &url)
 {
-	HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, url.size());
-	memcpy(GlobalLock(hMem), url.c_str(), url.size());
+	HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, url.size() + 1);
+	memcpy(GlobalLock(hMem), url.c_str(), url.size() + 1);
 	GlobalUnlock(hMem);
 	OpenClipboard(0);
 	EmptyClipboard();
