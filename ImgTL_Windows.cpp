@@ -163,18 +163,18 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		TCHAR temp[255];
 		DWORD len = 255;
 		int result;
-		if((result = RegGetValue(key, nullptr, TEXT("token"), RRF_RT_REG_SZ, nullptr, temp, &len)) == 0)
+		if((result = RegQueryValueEx(key, TEXT("token"), 0, nullptr, reinterpret_cast<LPBYTE>(temp), reinterpret_cast<LPDWORD>(&len))) == 0)
 			uploader.setToken(std::string(temp, temp + len / 2 - 1));
 
 		if(result != 0 || !len)
 			DialogBox(hInstance, MAKEINTRESOURCE(IDD_TOKEN), NULL, reinterpret_cast<DLGPROC>(TokenDlgProc));
 		len = 4;
 
-		if(RegGetValue(key, nullptr, TEXT("fullScreenHotKey"), RRF_RT_REG_DWORD, nullptr, &fullScreenHotKey, &len))
+		if(RegQueryValueEx(key, TEXT("fullScreenHotKey"), 0, nullptr, reinterpret_cast<LPBYTE>(&fullScreenHotKey), reinterpret_cast<LPDWORD>(&len)))
 			fullScreenHotKey = VK_SNAPSHOT;
-		if(RegGetValue(key, nullptr, TEXT("activeWndHotKey"), RRF_RT_REG_DWORD, nullptr, &activeWndHotKey, &len))
+		if(RegQueryValueEx(key, TEXT("activeWndHotKey"), 0, nullptr, reinterpret_cast<LPBYTE>(&activeWndHotKey), reinterpret_cast<LPDWORD>(&len)))
 			activeWndHotKey = MAKEWORD(VK_SNAPSHOT, MOD_ALT);
-		if(RegGetValue(key, nullptr, TEXT("regionHotKey"), RRF_RT_REG_DWORD, nullptr, &regionHotKey, &len))
+		if(RegQueryValueEx(key, TEXT("regionHotKey"), 0, nullptr, reinterpret_cast<LPBYTE>(&regionHotKey), reinterpret_cast<LPDWORD>(&len)))
 			regionHotKey = MAKEWORD(VK_SNAPSHOT, MOD_SHIFT);
 
 		RegCloseKey(key);
