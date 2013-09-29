@@ -177,6 +177,8 @@ private:
 	}
 	static JSONValue getJSONValue(int &pos, const std::string &string)
 	{
+		if(string.size() == 0)
+			return JSONValue();
 		int data = string.at(pos);
 		JSONValue ret;
 		if(data == '[')
