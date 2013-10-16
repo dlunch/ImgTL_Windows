@@ -118,5 +118,5 @@ std::string Uploader::getUserEmail()
 	*/
 	if(value.hasKey("error"))
 		return "";
-	return value["email"];
+	return value["data"]["user"]["email"];
 }
