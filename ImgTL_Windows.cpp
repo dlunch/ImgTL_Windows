@@ -29,8 +29,10 @@ void drawRegionLine(int sx, int sy, int ex, int ey)
 	int left = GetSystemMetrics(SM_XVIRTUALSCREEN);
 	int top = GetSystemMetrics(SM_YVIRTUALSCREEN);
 
-	HDC hdc = CreateCompatibleDC(GetDC(NULL));
-	HBITMAP hbmp = CreateCompatibleBitmap(GetDC(NULL), width, height);
+	HDC desktopDC = GetDC(NULL);
+	HDC hdc = CreateCompatibleDC(NULL);
+	HBITMAP hbmp = CreateCompatibleBitmap(desktopDC, width, height);
+	ReleaseDC(NULL, desktopDC);
 	HBITMAP oldbmp = reinterpret_cast<HBITMAP>(SelectObject(hdc, hbmp));
 	{
 		Gdiplus::SolidBrush transparent(Gdiplus::Color(1, 0, 0, 0));
