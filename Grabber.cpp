@@ -68,8 +68,7 @@ std::vector<uint8_t> Grabber::grabActive()
 	HBITMAP bmp = CreateCompatibleBitmap(screenDC, foregroundRect.right - foregroundRect.left, foregroundRect.bottom - foregroundRect.top);
 	SelectObject(memDC, bmp);
 
-	if(!PrintWindow(foregroundWnd, memDC, 0))
-		BitBlt(memDC, 0, 0, foregroundRect.right - foregroundRect.left, foregroundRect.bottom - foregroundRect.top, screenDC, foregroundRect.left, foregroundRect.top, SRCCOPY);
+	BitBlt(memDC, 0, 0, foregroundRect.right - foregroundRect.left, foregroundRect.bottom - foregroundRect.top, screenDC, foregroundRect.left, foregroundRect.top, SRCCOPY);
 
 	std::vector<uint8_t> result = bitmapToPNGData(bmp);
 
@@ -95,6 +94,8 @@ std::vector<uint8_t> Grabber::grab(int sx, int sy, int ex, int ey)
 		ex = left + width;
 	if(ey == -1)
 		ey = top + height;
+	if(sx > ex) std::swap(sx,ex);
+	if(sy > ey) std::swap(sy,ey);
 
 	HDC screenDC = GetDC(NULL);
 	HDC memDC = CreateCompatibleDC(screenDC);
